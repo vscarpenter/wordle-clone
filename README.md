@@ -1,64 +1,146 @@
 # Wordle Clone
 
-A simple clone of the popular NY Times Wordle game, built with HTML, CSS, and JavaScript.
+A faithful recreation of the popular NY Times Wordle game, built with vanilla HTML, CSS, and JavaScript. This implementation features the complete game experience including statistics tracking, animations, and responsive design.
 
 ## How to Play
 
-1. Open `index.html` in your web browser
-2. You have 6 attempts to guess a 5-letter word
-3. After each guess:
-   - Green tile: Letter is correct and in the right position
-   - Yellow tile: Letter is in the word but in the wrong position
-   - Gray tile: Letter is not in the word
-4. Use the on-screen keyboard or your physical keyboard to input letters
-5. Press Enter to submit your guess
-6. Press Backspace to delete a letter
+1. You have 6 attempts to guess a 5-letter word
+2. Type your guess using either the on-screen keyboard or your physical keyboard
+3. Press Enter to submit your guess
+4. After each guess, tiles will flip to reveal:
+   - **Green**: Letter is correct and in the right position
+   - **Yellow**: Letter is in the word but in the wrong position
+   - **Gray**: Letter is not in the word
+5. The keyboard will update to show which letters you've used
+6. Press Backspace to delete letters
 
 ## Features
 
-- Responsive design that works on both desktop and mobile
-- On-screen keyboard with visual feedback
-- Physical keyboard support
-- Color-coded feedback for correct, present, and absent letters
-- Win/lose detection
+- 📱 **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- ⌨️ **Dual Input**: Physical keyboard and interactive on-screen keyboard
+- 🎨 **Smooth Animations**: Tile flipping effects and row shake animations
+- 📊 **Statistics Tracking**: Persistent game statistics with guess distribution
+- 🔄 **New Game**: Start fresh games anytime
+- ❓ **Help Modal**: Built-in instructions
+- 🎯 **Official Word Lists**: Uses authentic Wordle solution and valid word sets
 
-## Technical Details
+## Quick Start
 
-The game is built using vanilla JavaScript with ES modules and doesn't require any external dependencies or server-side components. All game logic runs in the browser.
+### Option 1: Using Provided Scripts (Recommended)
 
-### Project Structure
+```bash
+# Start development server (defaults to port 8080)
+./start.sh
 
-- `index.html`: Main game interface
-- `styles.css`: Game styling
-- `script.js`: Core game logic
-- `dictionary.js`: Word lists and validation
-- `.gitignore`: Git ignore patterns
+# Or specify a custom port
+./start.sh 3000
 
-### Running the Game
+# Stop the server when done
+./stop.sh
+```
 
-Due to ES modules security requirements, you need to serve the game through a web server. You can do this in several ways:
+### Option 2: Manual Server Setup
 
-1. Using Python:
-   ```bash
-   python -m http.server 8080
-   ```
+```bash
+# Using Python 3
+python3 -m http.server 8080
 
-2. Using Node.js (with `http-server` package):
-   ```bash
-   npx http-server
-   ```
+# Using Node.js
+npx http-server
+
+# Using PHP
+php -S localhost:8080
+```
 
 Then open `http://localhost:8080` in your browser.
 
-## Word Lists
+## Architecture
 
-The game uses two word lists in `dictionary.js`:
+This is a **zero-dependency** vanilla JavaScript application with no build process or external frameworks.
 
-1. `WORDS`: List of words that can be solutions
-2. `VALID_WORDS`: Comprehensive list of valid guesses
+### Core Files
 
-You can expand either list by adding more words to the appropriate array in `dictionary.js`.
+| File | Purpose |
+|------|---------|
+| `index.html` | Game interface with board, keyboard, and modals |
+| `script.js` | Main game logic using ES modules |
+| `dictionary.js` | Word lists (~2,315 solutions, ~12,000 valid words) |
+| `styles.css` | Complete styling with CSS animations |
+| `start.sh` | Development server startup script |
+| `stop.sh` | Server shutdown script |
+| `update_dictionary.py` | Dictionary update utility |
 
-## Browser Support
+### Key Features
 
-The game works in all modern browsers that support ES6 JavaScript features and ES modules. 
+**Game State Management**
+- Global state variables for game progress
+- LocalStorage integration for persistent statistics
+- Toast notification system for user feedback
+
+**Word Validation System**
+- Two-tier validation: solution words vs. valid guesses
+- Duplicate guess prevention
+- Real-time feedback during typing
+
+**Animation System**
+- Staggered tile flip animations for guess reveals
+- Row shake effects for invalid words
+- Smooth keyboard state transitions
+
+## Word Dictionary
+
+The game uses an authentic two-tier word system:
+
+- **Solution Words** (`WORDS` array): ~2,315 carefully curated words that can be daily answers
+- **Valid Words** (`VALID_WORDS` Set): ~12,000 total acceptable guesses (includes solutions + additional words)
+
+### Updating the Dictionary
+
+```bash
+python update_dictionary.py
+```
+
+This script downloads the latest official Wordle word lists and regenerates `dictionary.js`.
+
+## Development
+
+### Project Structure
+```
+wordle-clone/
+├── index.html          # Game interface
+├── script.js           # Game logic (ES modules)
+├── styles.css          # Styling & animations
+├── dictionary.js       # Word lists (~103k tokens)
+├── start.sh           # Server start script
+├── stop.sh            # Server stop script
+├── update_dictionary.py # Dictionary updater
+├── favicon.ico        # Game icon
+
+```
+
+### Technical Requirements
+
+- **ES Modules**: Requires HTTP server (cannot use `file://` protocol)
+- **Modern JavaScript**: Uses ES6+ features (Set, localStorage, async/await)
+- **No Build Process**: Direct browser execution
+- **Font Awesome**: CDN-loaded icons for UI elements
+
+### Browser Support
+
+- ✅ Chrome 61+
+- ✅ Firefox 60+
+- ✅ Safari 10.1+
+- ✅ Edge 16+
+
+## Contributing
+
+This is a vanilla JavaScript project with no external dependencies. When contributing:
+
+1. Maintain the existing code style and patterns
+2. Test across different browsers and devices
+3. Ensure all animations work smoothly
+4. Preserve the mobile-responsive design
+
+## License
+
+This project is a educational recreation of Wordle for learning purposes. 

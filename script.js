@@ -223,26 +223,27 @@ function checkRow() {
         }
     }
 
+    // Check win condition immediately (don't wait for animation)
+    if (correct === 5) {
+        isGameOver = true;
+        updateStats(true);
+        toast.show(`Congratulations! You won in ${currentRow + 1} ${currentRow === 0 ? 'try' : 'tries'}!`, 3000);
+        return;
+    }
+
+    // Check lose condition immediately (before moving to next row)
+    if (currentRow === 5) { // This was the 6th and final attempt (0-indexed)
+        isGameOver = true;
+        updateStats(false);
+        toast.show(`Game Over! The word was ${targetWord}`, 3000);
+        return;
+    }
+
     // Move to next row after a delay to allow animations to complete
     setTimeout(() => {
-        // Check win condition
-        if (correct === 5) {
-            isGameOver = true;
-            updateStats(true);
-            toast.show(`Congratulations! You won in ${currentRow + 1} ${currentRow === 0 ? 'try' : 'tries'}!`, 3000);
-            return;
-        }
-
         // Move to next row
         currentRow++;
         currentTile = 0;
-
-        // Check lose condition
-        if (currentRow === 6) {
-            isGameOver = true;
-            updateStats(false);
-            toast.show(`Game Over! The word was ${targetWord}`, 3000);
-        }
     }, 600);
 }
 

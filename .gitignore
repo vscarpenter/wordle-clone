@@ -8,6 +8,9 @@ yarn.lock
 .env.local
 .env.*.local
 
+# Claude files
+CLAUDE.md
+
 # Build output
 dist/
 build/
